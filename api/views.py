@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.db.models import Count
 
 from api.models import Driver, Passenger, Bus, Journey, Seat, Trip
 from api.serializers import DriverSerializer, PassengerSerializer, BusSerializer, JourneySerializer, SeatSerializer, TripSerializer
