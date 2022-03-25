@@ -34,6 +34,7 @@ class Driver(Person):
 class Bus(models.Model):
 	number_plate = models.CharField(max_length=6)
 	seats = models.IntegerField(default=10, editable=False)
+	driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
 
 
 class Journey(models.Model):
@@ -44,7 +45,6 @@ class Journey(models.Model):
 
 class Trip(models.Model):
 	bus = models.ForeignKey(Bus, on_delete=models.SET_NULL, null=True)
-	driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
 	journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
 	start_time = models.DateTimeField()
 

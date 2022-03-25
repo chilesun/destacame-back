@@ -1,2 +1,9 @@
 
 .DS_Store
+*.cfg
+/lib
+/bin
+/api/migrations
+/apibuses/__pycache__
+/api/__pycache__
+*.sqlite3

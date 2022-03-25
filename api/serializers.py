@@ -37,7 +37,7 @@ class TripSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Trip
-		fields = ['id', 'bus', 'driver', 'journey', 'start_time', 'end_time', 'capacity']
+		fields = ['id', 'bus', 'journey', 'start_time', 'end_time', 'capacity']
 		read_only_fields = ['capacity']
 
 	def get_capacity(self, obj):
