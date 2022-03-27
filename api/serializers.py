@@ -32,17 +32,12 @@ class BusSerializer(serializers.ModelSerializer):
 
 
 class TripSerializer(serializers.ModelSerializer):
-	capacity = serializers.SerializerMethodField()
 	end_time = serializers.ReadOnlyField
+	capacity = serializers.ReadOnlyField
 
 	class Meta:
 		model = Trip
 		fields = ['id', 'bus', 'journey', 'start_time', 'end_time', 'capacity']
-		read_only_fields = ['capacity']
-
-	def get_capacity(self, obj):
-		seats = Seat.objects.filter(trip=obj)
-		return f'{(len(seats.exclude(passenger=None)) / len(seats)) * 100}'
 
 
 class SeatSerializer(serializers.ModelSerializer):

@@ -55,6 +55,11 @@ class Trip(models.Model):
 		date2 = date1 + datetime.timedelta(hours=plus)
 		return date2
 
+	@property
+	def capacity(self):
+		seats = Seat.objects.filter(trip=self.id)
+		return int((len(seats.exclude(passenger=None)) / len(seats)) * 100)
+
 	def save(self, *args, **kwargs):
 		super(Trip, self).save(*args, **kwargs)
 		if not len(Seat.objects.filter(trip=self)):
@@ -66,4 +71,5 @@ class Seat(models.Model):
 	passenger = models.ForeignKey(Passenger, on_delete=models.SET_NULL, null=True, blank=True)
 	trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
 	number = models.PositiveIntegerField()
+
 
