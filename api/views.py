@@ -1,6 +1,7 @@
 from api.models import Driver, Passenger, Bus, Journey, Seat, Trip
 from api.serializers import DriverSerializer, PassengerSerializer, BusSerializer, JourneySerializer, SeatSerializer, TripSerializer
 from rest_framework import viewsets
+from django_property_filter import PropertyNumberFilter, PropertyFilterSet
 
 
 class DriverViewSet(viewsets.ModelViewSet):
@@ -30,8 +31,16 @@ class SeatViewSet(viewsets.ModelViewSet):
     serializer_class = SeatSerializer
     filterset_fields = ['trip']
 
+
+class TripFilterSet(PropertyFilterSet):
+    capacity = PropertyNumberFilter(field_name='capacity', lookup_expr='gte')
+
+    class Meta:
+        model = Trip
+        fields = ['capacity', 'journey']
+
+
 class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all()
     serializer_class = TripSerializer
-    filterset_fields = ['journey']
-
+    filterset_class = TripFilterSet
