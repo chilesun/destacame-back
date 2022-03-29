@@ -1,7 +1,10 @@
 from itertools import cycle
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
+import pytz
+
+tz_cl = pytz.timezone('America/Santiago')
 
 
 class Person(models.Model):
@@ -46,7 +49,7 @@ class Journey(models.Model):
 class Trip(models.Model):
 	bus = models.ForeignKey(Bus, on_delete=models.SET_NULL, null=True)
 	journey = models.ForeignKey(Journey, on_delete=models.CASCADE)
-	start_time = models.DateTimeField()
+	start_time = models.DateTimeField(validators=[MinValueValidator(tz_cl.localize(datetime.datetime.now()))])
 
 	@property
 	def end_time(self):
